@@ -1,7 +1,6 @@
 import requests
 import uuid
 from utils.api.bearer_tokenizer import BearerTokenizer
-from requests import exceptions as requests_exceptions
 
 
 class CancellationFailedException(Exception):
@@ -38,22 +37,22 @@ class OrderingAPI:
     def get_order_id(self, order_number):
         url = f"{self.base_url}/api/v1/orders/{order_number}"
         order = requests.get(url, headers=self.headers)
-        return order.json()
+        return order
 
     def get_orders(self):
         url = f"{self.base_url}/ordering-api/api/v1/Orders"
         response = requests.get(url, headers=self.headers)
-        return response.json()
+        return response
 
     def get_card_type(self):
         url = f"{self.base_url}/api/v1/orders/cardtypes"
         response = requests.get(url, headers=self.headers)
-        return response.json()
+        return response
 
 
 if __name__ == '__main__':
     import pprint
     api = OrderingAPI()
-    pprint.pprint(api.get_orders())
+    pprint.pprint(api.get_orders().status_code)
     # pprint.pprint(api.get_order_by_id(25).json())
     # pprint.pprint(api.get_orders())
